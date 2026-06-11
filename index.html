@@ -1,12 +1,187 @@
 <!DOCTYPE html>
-<html>
+<html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
-<title>Meu Amor ❤️</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Para Você ❤️</title>
+
+<style>
+
+body{
+    margin:0;
+    padding:0;
+    font-family:Arial, sans-serif;
+    background:linear-gradient(135deg,#ffb6c1,#ffe4e1);
+    overflow-x:hidden;
+    text-align:center;
+}
+
+.container{
+    padding:30px;
+}
+
+.envelope{
+    font-size:120px;
+    cursor:pointer;
+    transition:0.4s;
+    margin-top:80px;
+}
+
+.envelope:hover{
+    transform:scale(1.1);
+}
+
+.carta{
+    display:none;
+    max-width:800px;
+    margin:auto;
+    background:white;
+    padding:25px;
+    border-radius:20px;
+    box-shadow:0 0 20px rgba(0,0,0,.2);
+    animation:aparecer 1s;
+}
+
+@keyframes aparecer{
+    from{
+        opacity:0;
+        transform:translateY(30px);
+    }
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
+}
+
+h1{
+    color:#e91e63;
+}
+
+.slideshow{
+    position:relative;
+    width:100%;
+    max-width:500px;
+    margin:auto;
+}
+
+.slideshow img{
+    width:100%;
+    border-radius:15px;
+    display:none;
+}
+
+.coracao{
+    position:fixed;
+    color:red;
+    font-size:20px;
+    animation:subir 8s linear infinite;
+}
+
+@keyframes subir{
+    from{
+        transform:translateY(100vh);
+        opacity:1;
+    }
+
+    to{
+        transform:translateY(-100px);
+        opacity:0;
+    }
+}
+
+</style>
 </head>
 
 <body>
-<h1>❤️ Feliz Dia dos Namorados ❤️</h1>
-<p>Essa página foi feita especialmente para você.</p>
+
+<div class="container">
+
+<div class="envelope" onclick="abrirCarta()">
+💌
+<p style="font-size:22px">Clique para abrir</p>
+</div>
+
+<div class="carta" id="carta">
+
+<h1>❤️ Para Você ❤️</h1>
+
+<p>
+Meu amor,
+
+Quero que saiba o quanto você é especial para mim.
+Cada momento ao seu lado se torna uma lembrança que guardo com carinho.
+
+Obrigado por fazer parte da minha vida.
+
+Te amo ❤️
+</p>
+
+<div class="slideshow">
+
+<img class="foto" src="foto1.jpg">
+<img class="foto" src="foto2.jpg">
+<img class="foto" src="foto3.jpg">
+
+</div>
+
+</div>
+
+</div>
+
+<script>
+
+function abrirCarta(){
+    document.querySelector(".envelope").style.display="none";
+    document.getElementById("carta").style.display="block";
+}
+
+let slide=0;
+
+function mostrarFotos(){
+
+    let fotos=document.getElementsByClassName("foto");
+
+    for(let i=0;i<fotos.length;i++){
+        fotos[i].style.display="none";
+    }
+
+    slide++;
+
+    if(slide>fotos.length){
+        slide=1;
+    }
+
+    fotos[slide-1].style.display="block";
+
+    setTimeout(mostrarFotos,3000);
+}
+
+mostrarFotos();
+
+function criarCoracao(){
+
+    let coracao=document.createElement("div");
+
+    coracao.classList.add("coracao");
+
+    coracao.innerHTML="❤️";
+
+    coracao.style.left=Math.random()*100+"vw";
+
+    coracao.style.fontSize=(20+Math.random()*30)+"px";
+
+    document.body.appendChild(coracao);
+
+    setTimeout(()=>{
+        coracao.remove();
+    },8000);
+
+}
+
+setInterval(criarCoracao,500);
+
+</script>
+
 </body>
 </html>

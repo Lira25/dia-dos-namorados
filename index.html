@@ -682,24 +682,25 @@
     <div class="story-shell">
 
       <!-- =========================
+         <!-- =========================
            CENA 1: CONTADOR DE HORAS
            ========================= -->
       <section class="scene active" data-scene="counter">
         <div class="scene-head">
           <span class="scene-kicker">Nossa história</span>
-          <h2 class="scene-title">Cada hora ao seu lado importa</h2>
+          <h2 class="scene-title">Cada hora importa</h2>
           <p class="scene-subtitle">
-            Um pequeno relógio de lembranças, contando tudo o que vivemos juntos desde o começo.
+            Um pequeno relógio de lembranças, contando tudo o que vivemos desde aquele inesquecível dia.
           </p>
         </div>
 
         <div class="scene-main">
           <div class="counter-box">
-            <div class="counter-label">Horas ao seu lado</div>
+            <div class="counter-label">Tempo ao seu lado</div>
             <div class="counter-value" id="hoursValue">0</div>
-            <div class="counter-small">horas vividas com carinho, risadas e amor</div>
+            <div class="counter-small">horas de muita parceria, risadas e um amor que só cresce</div>
             <div class="counting-note">
-              O número vai crescendo até chegar ao total de agora.
+              (E que venham milhares de horas a mais ao seu lado...)
             </div>
           </div>
         </div>
@@ -708,16 +709,16 @@
           <button class="next-btn" id="counterNextBtn">Continuar</button>
         </div>
       </section>
-
       <!-- =========================
+        <!-- =========================
            CENA 2: ROSAS
            ========================= -->
       <section class="scene" data-scene="roses">
         <div class="scene-head">
-          <span class="scene-kicker">Rosas</span>
-          <h2 class="scene-title">Uma rosa para o seu coração</h2>
+          <span class="scene-kicker">Rosas Vermelhas</span>
+          <h2 class="scene-title">Um pedaço do meu coração</h2>
           <p class="scene-subtitle">
-            As rosas falam de amor, cuidado e beleza. Cada uma carrega um pedacinho daquilo que eu sinto por você.
+            Elas representam amor, admiração, paixão e muito carinho. Cada uma delas carrega um sentimento e uma lembrança nossa.
           </p>
         </div>
 
@@ -739,9 +740,8 @@
 
             <div class="scene-card" style="margin-top:14px;">
               <p>
-                O vermelho das rosas parece guardar a intensidade de um sentimento verdadeiro.
-                Hoje, elas não são apenas flores — são um jeito bonito de dizer que o amor também
-                pode florescer em silêncio, em cuidado e em presença.
+                A verdade é que nenhuma flor do mundo conseguiria representar completamente tudo o que eu sinto por você. 
+                Mas cada uma dessas rosas tenta transmitir um pouquinho desse amor, para que você possa segurar em suas mãos o cuidado que eu guardo aqui dentro.
               </p>
             </div>
           </div>
@@ -751,16 +751,16 @@
           <button class="next-btn" data-next>Próximo</button>
         </div>
       </section>
-
       <!-- =========================
+          <!-- =========================
            CENA 3: PERFUME
            ========================= -->
       <section class="scene" data-scene="perfume">
         <div class="scene-head">
-          <span class="scene-kicker">Perfume</span>
+          <span class="scene-kicker">Essência</span>
           <h2 class="scene-title">A magia de uma presença</h2>
           <p class="scene-subtitle">
-            Tem coisas que não precisam ser vistas para serem sentidas. Um aroma bonito pode virar memória.
+            Existem presenças que permanecem com a gente, mesmo quando não estão por perto.
           </p>
         </div>
 
@@ -769,7 +769,6 @@
             <div class="perfume-art" id="perfumeArt">
               <!-- ==================================
                    Ícone simples representando perfume
-                   Se quiser, depois trocamos por outra arte
                    ================================== -->
               <div class="perfume-icon">✨</div>
 
@@ -785,8 +784,7 @@
 
             <div class="scene-card" style="margin-top:14px;">
               <p>
-                Existe uma delicadeza em certas presenças que fica no ar.
-                É como um perfume bom: discreto, marcante e capaz de transformar um instante comum em algo inesquecível.
+                Assim como um perfume elegante que fica no ar e transforma um momento comum em uma lembrança inesquecível, algumas pessoas têm exatamente esse efeito. Você é uma delas. A sua combinação única de delicadeza e força marca a minha vida de um jeito que nada mais consegue.
               </p>
             </div>
           </div>
@@ -796,7 +794,6 @@
           <button class="next-btn" data-next>Próximo</button>
         </div>
       </section>
-
       <!-- =========================
            CENA 4: FOTOS AUTOMÁTICAS
            As fotos passam sozinhas
@@ -819,13 +816,18 @@
                    Os nomes precisam ser exatamente:
                    Fotos1.png, Fotos2.png, Fotos3.png
                    ================================== -->
-              <img class="photo active" src="Fotos1.png" alt="Foto 1" />
-              <img class="photo" src="Fotos2.png" alt="Foto 2" />
-              <img class="photo" src="Fotos3.png" alt="Foto 3" />
+            <img class="photo active" src="Foto1.jpeg" alt="Foto 1" />
+              <img class="photo" src="Foto2.jpeg" alt="Foto 2" />
+              <img class="photo" src="Foto3.jpeg" alt="Foto 3" />
+              <img class="photo" src="Foto4.jpeg" alt="Foto 4" />
+              <img class="photo" src="Foto5.jpg" alt="Foto 5" />
+              <img class="photo" src="Foto6.jpeg" alt="Foto 6" />
+              <img class="photo" src="Foto7.jpeg" alt="Foto 7" />
+              <img class="photo" src="Foto8.jpeg" alt="Foto 8" />
+              <img class="photo" src="Foto9.jpeg" alt="Foto 9" />
 
               <div class="photo-overlay"></div>
 
-              <!-- Texto leve por cima da foto -->
               <div class="photo-caption">
                 <strong id="photoTitle">Um momento nosso</strong>
                 <span id="photoText">As melhores lembranças são aquelas vividas com carinho.</span>
@@ -834,6 +836,12 @@
 
             <div class="photo-dots" id="photoDots" aria-hidden="true">
               <i class="active"></i>
+              <i></i>
+              <i></i>
+              <i></i>
+              <i></i>
+              <i></i>
+              <i></i>
               <i></i>
               <i></i>
             </div>
@@ -926,17 +934,28 @@
 
     // Textos das fotos
     const FOTO_TITULOS = [
-      "Um começo cheio de carinho",
-      "Um momento especial",
-      "Uma lembrança guardada no coração"
+      "Luzes e bons momentos",
+      "Dias de sol e leveza",
+      "Mergulhando de cabeça",
+      "Nosso refúgio",
+      "Na mesma direção",
+      "A combinação perfeita",
+      "Caminhando lado a lado",
+      "Parceria em todos os ritmos",
+      "Brilhando juntos"
     ];
 
-    const FOTO_TEXTOS = [
-      "Cada detalhe nosso merece ser lembrado com amor.",
-      "Algumas memórias não precisam de legenda para serem sentidas.",
-      "O que é verdadeiro sempre encontra um jeito de ficar."
+   const FOTO_TEXTOS = [
+      "A vida dá voltas, mas a melhor parte é ter você comigo em todas elas.",
+      "Uma praia, uma gelada e você. Qualquer lugar vira um paraíso quando a gente tá junto.",
+      "A melhor escolha que já fiz foi mergulhar de cabeça nessa história. ",
+      "Não importa a hora ou o lugar, a minha paz eu sempre encontro quando estou com você.",
+      "A vida é uma grande viagem. A melhor parte de qualquer trajeto é ter você navegando comigo.",
+      "Sol, mar, pés na areia e você do meu lado. ",
+      "A vida ganha um ritmo leve quando a gente caminha na mesma direção. Amo dividir isso com você.",
+      "No Utinga ou em qualquer cenário, nossa sintonia é a mesma. Minha melhor dupla sempre será você.",
+      "Virar o ano ao seu lado é a certeza de que o futuro guarda coisas incríveis para nós."
     ];
-
     /* =====================================================
        ELEMENTOS PRINCIPAIS
        ===================================================== */

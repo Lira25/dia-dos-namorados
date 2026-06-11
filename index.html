@@ -1,187 +1,1218 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Para Você ❤️</title>
 
-<title>Para Você ❤️</title>
+  <style>
+    :root{
+      --bg1:#ffb3c7;
+      --bg2:#ffd6e0;
+      --bg3:#fff4f7;
+      --card:#ffffffdd;
+      --text:#7a1035;
+      --accent:#e91e63;
+      --accent2:#ff5c8a;
+      --shadow: 0 18px 45px rgba(130, 10, 50, .18);
+    }
 
-<style>
+    *{ box-sizing:border-box; }
 
-body{
-    margin:0;
-    padding:0;
-    font-family:Arial, sans-serif;
-    background:linear-gradient(135deg,#ffb6c1,#ffe4e1);
-    overflow-x:hidden;
-    text-align:center;
-}
+    html,body{
+      margin:0;
+      width:100%;
+      min-height:100%;
+      font-family: Arial, Helvetica, sans-serif;
+      color:var(--text);
+      overflow-x:hidden;
+      background:
+        radial-gradient(circle at top, #fff8fb 0%, transparent 35%),
+        linear-gradient(135deg, var(--bg1), var(--bg2) 45%, var(--bg3));
+    }
 
-.container{
-    padding:30px;
-}
+    body{
+      position:relative;
+    }
 
-.envelope{
-    font-size:120px;
-    cursor:pointer;
-    transition:0.4s;
-    margin-top:80px;
-}
+    /* =========================
+       FUNDO: CORAÇÕES / PARTÍCULAS
+       ========================= */
+    #particles{
+      position:fixed;
+      inset:0;
+      pointer-events:none;
+      overflow:hidden;
+      z-index:1;
+    }
 
-.envelope:hover{
-    transform:scale(1.1);
-}
+    .particle{
+      position:absolute;
+      bottom:-60px;
+      user-select:none;
+      opacity:.85;
+      animation: floatUp linear forwards;
+      filter: drop-shadow(0 8px 16px rgba(0,0,0,.08));
+      will-change: transform, opacity;
+    }
 
-.carta{
-    display:none;
-    max-width:800px;
-    margin:auto;
-    background:white;
-    padding:25px;
-    border-radius:20px;
-    box-shadow:0 0 20px rgba(0,0,0,.2);
-    animation:aparecer 1s;
-}
+    .heart{ color:#ff3e78; }
+    .rose{ color:#d81b60; }
+    .sparkle{ color:#ffffff; text-shadow:0 0 14px rgba(255,255,255,.9); }
 
-@keyframes aparecer{
-    from{
+    @keyframes floatUp{
+      0%{
+        transform: translateY(0) translateX(0) scale(.9) rotate(0deg);
         opacity:0;
-        transform:translateY(30px);
-    }
-    to{
-        opacity:1;
-        transform:translateY(0);
-    }
-}
-
-h1{
-    color:#e91e63;
-}
-
-.slideshow{
-    position:relative;
-    width:100%;
-    max-width:500px;
-    margin:auto;
-}
-
-.slideshow img{
-    width:100%;
-    border-radius:15px;
-    display:none;
-}
-
-.coracao{
-    position:fixed;
-    color:red;
-    font-size:20px;
-    animation:subir 8s linear infinite;
-}
-
-@keyframes subir{
-    from{
-        transform:translateY(100vh);
-        opacity:1;
-    }
-
-    to{
-        transform:translateY(-100px);
+      }
+      10%{ opacity:.92; }
+      100%{
+        transform: translateY(-120vh) translateX(var(--drift, 0px)) scale(1.2) rotate(220deg);
         opacity:0;
+      }
     }
-}
 
-</style>
+    /* =========================
+       TELA INICIAL (CARTA FECHADA)
+       ========================= */
+    .start-screen,
+    .story-wrap{
+      position:relative;
+      z-index:2;
+    }
+
+    .start-screen{
+      min-height:100vh;
+      display:grid;
+      place-items:center;
+      padding:24px;
+      text-align:center;
+    }
+
+    .start-card{
+      width:min(780px, 100%);
+      background:rgba(255,255,255,.60);
+      backdrop-filter: blur(10px);
+      border:1px solid rgba(255,255,255,.55);
+      border-radius:28px;
+      box-shadow:var(--shadow);
+      padding:34px 22px;
+    }
+
+    .title{
+      margin:0 0 10px;
+      font-size: clamp(2rem, 5vw, 3.5rem);
+      color:var(--accent);
+      letter-spacing:.3px;
+      line-height:1.05;
+    }
+
+    .subtitle{
+      margin:0 auto 28px;
+      max-width:55ch;
+      font-size:clamp(1rem, 2.2vw, 1.15rem);
+      line-height:1.6;
+      color:#7f3552;
+    }
+
+    .envelope-btn{
+      appearance:none;
+      border:0;
+      background:transparent;
+      cursor:pointer;
+      padding:0;
+      transition: transform .25s ease;
+    }
+
+    .envelope-btn:hover{ transform: scale(1.04); }
+
+    .envelope{
+      width:min(250px, 65vw);
+      margin:0 auto 14px;
+      aspect-ratio: 1.1/1;
+      position:relative;
+      filter: drop-shadow(0 18px 30px rgba(145, 16, 63, .2));
+    }
+
+    .envelope .base{
+      position:absolute;
+      inset:18% 0 0 0;
+      background: linear-gradient(180deg, #fff 0%, #ffe3ec 100%);
+      border-radius:20px;
+      border:2px solid #f0a7bb;
+    }
+
+    .envelope .flap-left,
+    .envelope .flap-right,
+    .envelope .flap-top{
+      position:absolute;
+      width:0;height:0;
+      border-style:solid;
+      z-index:2;
+    }
+
+    .envelope .flap-left{
+      top:18%;
+      left:0;
+      border-width: 0 0 120px 140px;
+      border-color: transparent transparent #ffd0dd transparent;
+    }
+
+    .envelope .flap-right{
+      top:18%;
+      right:0;
+      border-width: 120px 140px 0 0;
+      border-color: #ffd0dd transparent transparent transparent;
+    }
+
+    .envelope .flap-top{
+      top:0;
+      left:50%;
+      transform:translateX(-50%);
+      border-width: 0 126px 118px 126px;
+      border-color: transparent transparent #ffafc8 transparent;
+    }
+
+    .envelope .seal{
+      position:absolute;
+      left:50%;
+      top:58%;
+      transform:translate(-50%, -50%);
+      z-index:3;
+      width:78px;
+      height:78px;
+      border-radius:50%;
+      background: radial-gradient(circle at 30% 30%, #ff85ad 0%, #e91e63 50%, #be104b 100%);
+      display:grid;
+      place-items:center;
+      color:white;
+      font-size:2rem;
+      box-shadow:0 10px 28px rgba(233,30,99,.35);
+      border:3px solid rgba(255,255,255,.45);
+    }
+
+    .tap-hint{
+      margin:14px 0 0;
+      font-size: .98rem;
+      color:#8a4161;
+    }
+
+    /* =========================
+       HISTÓRIA / SEÇÕES
+       ========================= */
+    .story-wrap{
+      display:none;
+      min-height:100vh;
+      padding:18px;
+    }
+
+    .story-shell{
+      width:min(980px, 100%);
+      margin:0 auto;
+      min-height:calc(100vh - 36px);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+    }
+
+    .scene{
+      display:none;
+      width:100%;
+      min-height:calc(100vh - 36px);
+      background:rgba(255,255,255,.52);
+      backdrop-filter: blur(10px);
+      border:1px solid rgba(255,255,255,.50);
+      border-radius:30px;
+      box-shadow:var(--shadow);
+      overflow:hidden;
+      position:relative;
+    }
+
+    .scene.active{
+      display:grid;
+      grid-template-rows:auto 1fr auto;
+      animation: sceneIn .55s ease;
+    }
+
+    @keyframes sceneIn{
+      from{ opacity:0; transform: translateY(14px) scale(.98); }
+      to{ opacity:1; transform: translateY(0) scale(1); }
+    }
+
+    .scene-head{
+      padding:20px 20px 0;
+      text-align:center;
+    }
+
+    .scene-kicker{
+      display:inline-block;
+      padding:8px 14px;
+      border-radius:999px;
+      background: rgba(233,30,99,.11);
+      color: var(--accent);
+      font-weight:700;
+      letter-spacing:.5px;
+      text-transform:uppercase;
+      font-size:.8rem;
+    }
+
+    .scene-title{
+      margin:12px 0 0;
+      font-size: clamp(1.4rem, 3.8vw, 2.6rem);
+      color:var(--accent);
+      line-height:1.1;
+    }
+
+    .scene-subtitle{
+      margin:10px auto 0;
+      max-width:60ch;
+      color:#7a4b5e;
+      line-height:1.7;
+      padding:0 10px;
+      font-size:clamp(.98rem, 2.1vw, 1.05rem);
+    }
+
+    .scene-main{
+      display:grid;
+      place-items:center;
+      padding:14px 18px 8px;
+    }
+
+    .scene-footer{
+      padding:0 18px 20px;
+      text-align:center;
+      color:#8d5b6f;
+      font-size:.95rem;
+    }
+
+    .next-btn{
+      appearance:none;
+      border:0;
+      cursor:pointer;
+      border-radius:999px;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      color:white;
+      padding:14px 20px;
+      font-size:1rem;
+      font-weight:700;
+      box-shadow:0 10px 25px rgba(233,30,99,.28);
+      transition: transform .2s ease, opacity .2s ease;
+      margin-top:10px;
+    }
+    .next-btn:hover{ transform: translateY(-1px) scale(1.01); }
+    .next-btn:active{ transform: translateY(0) scale(.99); }
+
+    /* =========================
+       CONTADOR DE HORAS
+       ========================= */
+    .counter-box{
+      width:min(760px, 100%);
+      text-align:center;
+      padding:28px 20px;
+    }
+
+    .counter-label{
+      color:#7f3757;
+      font-size:1rem;
+      margin-bottom:10px;
+    }
+
+    .counter-value{
+      font-size: clamp(3rem, 10vw, 6rem);
+      font-weight:800;
+      letter-spacing:-2px;
+      color:#c21655;
+      line-height:1;
+      text-shadow:0 10px 25px rgba(194,22,85,.12);
+    }
+
+    .counter-small{
+      margin-top:10px;
+      color:#7d4b60;
+      font-size:1rem;
+    }
+
+    .counting-note{
+      margin-top:18px;
+      font-size:.98rem;
+      color:#85556b;
+    }
+
+    /* =========================
+       TELA DAS ROSAS
+       ========================= */
+    .rose-stage,
+    .perfume-stage,
+    .final-stage{
+      width:100%;
+      min-height:100%;
+    }
+
+    .rose-art{
+      position:relative;
+      width:100%;
+      height:100%;
+      min-height:52vh;
+      display:grid;
+      place-items:center;
+      overflow:hidden;
+      background:
+        radial-gradient(circle at top, rgba(255,255,255,.65) 0%, transparent 35%),
+        linear-gradient(180deg, rgba(255, 223, 233, .95), rgba(255, 245, 248, .92));
+    }
+
+    .rose-bouquet{
+      font-size: clamp(3.5rem, 10vw, 7rem);
+      line-height:1;
+      filter: drop-shadow(0 14px 30px rgba(0,0,0,.12));
+      animation: bouquetFloat 3s ease-in-out infinite;
+      z-index:2;
+    }
+
+    @keyframes bouquetFloat{
+      0%,100%{ transform: translateY(0) rotate(-1deg); }
+      50%{ transform: translateY(-10px) rotate(1deg); }
+    }
+
+    .rose-orbit{
+      position:absolute;
+      inset:0;
+      pointer-events:none;
+      overflow:hidden;
+    }
+
+    .rose-orbit span{
+      position:absolute;
+      font-size:1.55rem;
+      animation: roseDrift 10s linear forwards;
+      opacity:0;
+    }
+
+    @keyframes roseDrift{
+      0%{ transform: translateY(18vh) translateX(0) scale(.9); opacity:0; }
+      10%{ opacity:.9; }
+      100%{ transform: translateY(-110vh) translateX(var(--dx, 0px)) scale(1.15); opacity:0; }
+    }
+
+    .scene-card{
+      width:min(760px, 100%);
+      background:rgba(255,255,255,.74);
+      border:1px solid rgba(255,255,255,.6);
+      border-radius:24px;
+      padding:18px;
+      box-shadow:0 16px 35px rgba(130,10,50,.12);
+      margin:0 auto;
+    }
+
+    .scene-card p{
+      margin:0;
+      line-height:1.8;
+      font-size:1.02rem;
+      color:#6f3550;
+    }
+
+    /* =========================
+       TELA DO PERFUME
+       ========================= */
+    .perfume-art{
+      position:relative;
+      width:100%;
+      min-height:52vh;
+      overflow:hidden;
+      display:grid;
+      place-items:center;
+      background:
+        radial-gradient(circle at 50% 20%, rgba(255,255,255,.8), transparent 30%),
+        linear-gradient(180deg, rgba(252, 228, 237, .92), rgba(255, 248, 250, .92));
+    }
+
+    .perfume-icon{
+      font-size: clamp(3.1rem, 9vw, 6.2rem);
+      line-height:1;
+      z-index:2;
+      filter: drop-shadow(0 14px 30px rgba(0,0,0,.12));
+      animation: scentFloat 4s ease-in-out infinite;
+    }
+
+    @keyframes scentFloat{
+      0%,100%{ transform: translateY(0); }
+      50%{ transform: translateY(-12px); }
+    }
+
+    .scent-lines{
+      position:absolute;
+      inset:0;
+      pointer-events:none;
+      overflow:hidden;
+    }
+
+    .scent-lines span{
+      position:absolute;
+      left:50%;
+      top:70%;
+      width:220px;
+      height:22px;
+      border-radius:999px;
+      background: linear-gradient(90deg, rgba(255,255,255,0), rgba(255,255,255,.72), rgba(255,255,255,0));
+      filter: blur(2px);
+      animation: scentWave 5.5s ease-in-out infinite;
+      opacity:.75;
+    }
+
+    .scent-lines span:nth-child(2){ top:62%; animation-delay:.8s; width:270px; opacity:.55; }
+    .scent-lines span:nth-child(3){ top:54%; animation-delay:1.6s; width:190px; opacity:.58; }
+
+    @keyframes scentWave{
+      0%,100%{ transform: translateX(-50%) translateY(0) scaleX(.9); }
+      50%{ transform: translateX(-50%) translateY(-8px) scaleX(1.06); }
+    }
+
+    /* =========================
+       GALERIA / FOTOS
+       ========================= */
+    .photo-stage{
+      min-height:100%;
+      display:grid;
+      grid-template-rows:auto 1fr;
+    }
+
+    .photo-frame{
+      position:relative;
+      width:100%;
+      min-height:58vh;
+      background:#000;
+      overflow:hidden;
+    }
+
+    .photo-frame img{
+      position:absolute;
+      inset:0;
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      opacity:0;
+      transform:scale(1.04);
+      transition: opacity .7s ease, transform .9s ease;
+    }
+
+    .photo-frame img.active{
+      opacity:1;
+      transform:scale(1);
+    }
+
+    .photo-overlay{
+      position:absolute;
+      inset:0;
+      background:
+        linear-gradient(180deg, rgba(0,0,0,.08), rgba(0,0,0,.14) 60%, rgba(0,0,0,.22));
+      pointer-events:none;
+      z-index:2;
+    }
+
+    .photo-caption{
+      position:absolute;
+      left:0;
+      right:0;
+      bottom:0;
+      z-index:3;
+      padding:18px 16px 16px;
+      color:white;
+      text-shadow:0 2px 10px rgba(0,0,0,.4);
+      text-align:center;
+    }
+
+    .photo-caption strong{
+      display:block;
+      font-size:1.15rem;
+      margin-bottom:6px;
+    }
+
+    .photo-caption span{
+      display:block;
+      font-size:.95rem;
+      opacity:.94;
+    }
+
+    .photo-dots{
+      display:flex;
+      justify-content:center;
+      gap:8px;
+      padding:14px 0 2px;
+    }
+
+    .photo-dots i{
+      width:9px;
+      height:9px;
+      border-radius:50%;
+      background:rgba(233,30,99,.25);
+      display:inline-block;
+      transition:transform .25s ease, background .25s ease;
+    }
+
+    .photo-dots i.active{
+      background:var(--accent);
+      transform:scale(1.25);
+    }
+
+    /* =========================
+       TELA FINAL
+       ========================= */
+    .final-art{
+      position:relative;
+      min-height:62vh;
+      display:grid;
+      place-items:center;
+      overflow:hidden;
+      background:
+        radial-gradient(circle at top, rgba(255,255,255,.6) 0%, transparent 35%),
+        linear-gradient(180deg, rgba(255, 214, 225, .96), rgba(255, 245, 248, .96));
+    }
+
+    .final-card{
+      width:min(820px, 100%);
+      background:rgba(255,255,255,.76);
+      border:1px solid rgba(255,255,255,.65);
+      border-radius:28px;
+      padding:26px 20px;
+      box-shadow:0 20px 45px rgba(130,10,50,.14);
+      text-align:center;
+      margin:18px;
+    }
+
+    .final-heart{
+      font-size: clamp(3rem, 10vw, 5rem);
+      margin-bottom:8px;
+      display:block;
+      animation: heartbeat 1.8s ease-in-out infinite;
+    }
+
+    @keyframes heartbeat{
+      0%,100%{ transform:scale(1); }
+      35%{ transform:scale(1.08); }
+      55%{ transform:scale(.98); }
+      75%{ transform:scale(1.12); }
+    }
+
+    .final-text{
+      font-size: clamp(1rem, 2.3vw, 1.1rem);
+      line-height:1.9;
+      color:#6f3550;
+      max-width:62ch;
+      margin:0 auto;
+    }
+
+    .final-sign{
+      margin-top:18px;
+      color:var(--accent);
+      font-weight:800;
+      letter-spacing:.2px;
+      font-size:1.05rem;
+    }
+
+    /* =========================
+       RESPONSIVO
+       ========================= */
+    @media (max-width: 720px){
+      .start-card{
+        padding:28px 16px;
+        border-radius:24px;
+      }
+      .scene{
+        border-radius:22px;
+      }
+      .scene-main{
+        padding:10px 14px 8px;
+      }
+      .scene-head{
+        padding:18px 16px 0;
+      }
+      .scene-footer{
+        padding:0 14px 16px;
+      }
+      .photo-frame{
+        min-height:50vh;
+      }
+      .final-card{
+        padding:22px 16px;
+      }
+      .scene-card{
+        padding:16px;
+      }
+    }
+  </style>
 </head>
 
 <body>
 
-<div class="container">
+  <!-- =========================
+       FUNDO DE PARTÍCULAS
+       ========================= -->
+  <div id="particles"></div>
 
-<div class="envelope" onclick="abrirCarta()">
-💌
-<p style="font-size:22px">Clique para abrir</p>
-</div>
+  <!-- =========================
+       TELA INICIAL: CARTA FECHADA
+       Clique aqui para começar
+       ========================= -->
+  <section class="start-screen" id="startScreen">
+    <div class="start-card">
+      <h1 class="title">Feliz Dia dos Namorados ❤️</h1>
+      <p class="subtitle">
+        Abre essa cartinha com calma. Tem uma pequena história para você ver, um pouquinho do que sinto,
+        e alguns momentos nossos guardados com carinho.
+      </p>
 
-<div class="carta" id="carta">
+      <button class="envelope-btn" id="openCardBtn" aria-label="Abrir carta">
+        <div class="envelope">
+          <div class="flap-top"></div>
+          <div class="flap-left"></div>
+          <div class="flap-right"></div>
+          <div class="base"></div>
+          <div class="seal">❤</div>
+        </div>
+        <p class="tap-hint">Toque na carta para abrir a surpresa</p>
+      </button>
+    </div>
+  </section>
 
-<h1>❤️ Para Você ❤️</h1>
+  <!-- =========================
+       HISTÓRIA PRINCIPAL
+       Todas as cenas ficam aqui
+       ========================= -->
+  <main class="story-wrap" id="storyWrap">
+    <div class="story-shell">
 
-<p>
-Meu amor,
+      <!-- =========================
+           CENA 1: CONTADOR DE HORAS
+           ========================= -->
+      <section class="scene active" data-scene="counter">
+        <div class="scene-head">
+          <span class="scene-kicker">Nossa história</span>
+          <h2 class="scene-title">Cada hora ao seu lado importa</h2>
+          <p class="scene-subtitle">
+            Um pequeno relógio de lembranças, contando tudo o que vivemos juntos desde o começo.
+          </p>
+        </div>
 
-Quero que saiba o quanto você é especial para mim.
-Cada momento ao seu lado se torna uma lembrança que guardo com carinho.
+        <div class="scene-main">
+          <div class="counter-box">
+            <div class="counter-label">Horas ao seu lado</div>
+            <div class="counter-value" id="hoursValue">0</div>
+            <div class="counter-small">horas vividas com carinho, risadas e amor</div>
+            <div class="counting-note">
+              O número vai crescendo até chegar ao total de agora.
+            </div>
+          </div>
+        </div>
 
-Obrigado por fazer parte da minha vida.
+        <div class="scene-footer">
+          <button class="next-btn" id="counterNextBtn">Continuar</button>
+        </div>
+      </section>
 
-Te amo ❤️
-</p>
+      <!-- =========================
+           CENA 2: ROSAS
+           ========================= -->
+      <section class="scene" data-scene="roses">
+        <div class="scene-head">
+          <span class="scene-kicker">Rosas</span>
+          <h2 class="scene-title">Uma rosa para o seu coração</h2>
+          <p class="scene-subtitle">
+            As rosas falam de amor, cuidado e beleza. Cada uma carrega um pedacinho daquilo que eu sinto por você.
+          </p>
+        </div>
 
-<div class="slideshow">
+        <div class="scene-main">
+          <div class="rose-stage">
+            <div class="rose-art" id="roseArt">
+              <!-- ==================================
+                   Desenho/emoji do buquê
+                   Edite aqui se quiser trocar a arte
+                   ================================== -->
+              <div class="rose-bouquet">💐</div>
 
-<img class="foto" src="Foto1.jpg">
-<img class="foto" src="Foto2.jpg">
-<img class="foto" src="Foto3.jpg">
+              <!-- ==================================
+                   Partículas de rosas subindo
+                   O JS cria os elementos aqui
+                   ================================== -->
+              <div class="rose-orbit" id="roseOrbit"></div>
+            </div>
 
-</div>
+            <div class="scene-card" style="margin-top:14px;">
+              <p>
+                O vermelho das rosas parece guardar a intensidade de um sentimento verdadeiro.
+                Hoje, elas não são apenas flores — são um jeito bonito de dizer que o amor também
+                pode florescer em silêncio, em cuidado e em presença.
+              </p>
+            </div>
+          </div>
+        </div>
 
-</div>
+        <div class="scene-footer">
+          <button class="next-btn" data-next>Próximo</button>
+        </div>
+      </section>
 
-</div>
+      <!-- =========================
+           CENA 3: PERFUME
+           ========================= -->
+      <section class="scene" data-scene="perfume">
+        <div class="scene-head">
+          <span class="scene-kicker">Perfume</span>
+          <h2 class="scene-title">A magia de uma presença</h2>
+          <p class="scene-subtitle">
+            Tem coisas que não precisam ser vistas para serem sentidas. Um aroma bonito pode virar memória.
+          </p>
+        </div>
 
-<script>
+        <div class="scene-main">
+          <div class="perfume-stage">
+            <div class="perfume-art" id="perfumeArt">
+              <!-- ==================================
+                   Ícone simples representando perfume
+                   Se quiser, depois trocamos por outra arte
+                   ================================== -->
+              <div class="perfume-icon">✨</div>
 
-function abrirCarta(){
-    document.querySelector(".envelope").style.display="none";
-    document.getElementById("carta").style.display="block";
-}
+              <!-- ==================================
+                   Partículas suaves para lembrar fragrância
+                   ================================== -->
+              <div class="scent-lines">
+                <span></span>
+                <span></span>
+                <span></span>
+              </div>
+            </div>
 
-let slide=0;
+            <div class="scene-card" style="margin-top:14px;">
+              <p>
+                Existe uma delicadeza em certas presenças que fica no ar.
+                É como um perfume bom: discreto, marcante e capaz de transformar um instante comum em algo inesquecível.
+              </p>
+            </div>
+          </div>
+        </div>
 
-function mostrarFotos(){
+        <div class="scene-footer">
+          <button class="next-btn" data-next>Próximo</button>
+        </div>
+      </section>
 
-    let fotos=document.getElementsByClassName("foto");
+      <!-- =========================
+           CENA 4: FOTOS AUTOMÁTICAS
+           As fotos passam sozinhas
+           ========================= -->
+      <section class="scene" data-scene="photos">
+        <div class="scene-head">
+          <span class="scene-kicker">Lembranças</span>
+          <h2 class="scene-title">Alguns momentos nossos</h2>
+          <p class="scene-subtitle">
+            As fotos passam sozinhas, como lembranças que voltam de forma suave.
+          </p>
+        </div>
 
-    for(let i=0;i<fotos.length;i++){
-        fotos[i].style.display="none";
+        <div class="scene-main" style="padding:0;">
+          <div class="photo-stage" style="width:100%;">
+            <div class="photo-frame">
+              <!-- ==================================
+                   FOTOS DO CASAL
+                   Troque depois se quiser.
+                   Os nomes precisam ser exatamente:
+                   Fotos1.png, Fotos2.png, Fotos3.png
+                   ================================== -->
+              <img class="photo active" src="Fotos1.png" alt="Foto 1" />
+              <img class="photo" src="Fotos2.png" alt="Foto 2" />
+              <img class="photo" src="Fotos3.png" alt="Foto 3" />
+
+              <div class="photo-overlay"></div>
+
+              <!-- Texto leve por cima da foto -->
+              <div class="photo-caption">
+                <strong id="photoTitle">Um momento nosso</strong>
+                <span id="photoText">As melhores lembranças são aquelas vividas com carinho.</span>
+              </div>
+            </div>
+
+            <div class="photo-dots" id="photoDots" aria-hidden="true">
+              <i class="active"></i>
+              <i></i>
+              <i></i>
+            </div>
+          </div>
+        </div>
+
+        <div class="scene-footer">
+          <button class="next-btn" data-next>Próximo</button>
+        </div>
+      </section>
+
+      <!-- =========================
+           CENA 5: FINAL
+           Sem foto, só cenário bonito
+           ========================= -->
+      <section class="scene" data-scene="final">
+        <div class="scene-head">
+          <span class="scene-kicker">Final</span>
+          <h2 class="scene-title">Você merece tudo de bom</h2>
+          <p class="scene-subtitle">
+            Esse final foi feito para lembrar o quanto você é importante.
+          </p>
+        </div>
+
+        <div class="scene-main">
+          <div class="final-stage">
+            <div class="final-art">
+              <!-- ==================================
+                   Fundo romântico sem foto
+                   Corações e partículas continuam subindo
+                   ================================== -->
+              <div class="final-card">
+                <span class="final-heart">❤️</span>
+
+                <!-- ==================================
+                     TEXTO FINAL
+                     Edite livremente essa mensagem
+                     ================================== -->
+                <div class="final-text">
+                  Existem amores que não se explicam por números, presentes ou palavras prontas.
+                  Só se sentem.
+
+                  O que a gente construiu tem valor, tem cuidado e tem verdade.
+                  E isso é raro.
+
+                  Você é uma pessoa incrível, forte, linda por dentro e por fora,
+                  e merece ser tratada com carinho em todos os dias da sua vida.
+
+                  Eu espero que você nunca esqueça disso:
+                  eu estou feliz por ter você na minha história,
+                  e continuo escolhendo você, com o coração tranquilo e cheio de amor.
+                </div>
+
+                <div class="final-sign">
+                  Feliz Dia dos Namorados ❤️
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="scene-footer">
+          <button class="next-btn" id="restartBtn">Ver de novo</button>
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <!-- =========================
+       MÚSICA
+       Troque Musica.mp3 pelo nome certo
+       A música começa ao clicar na carta
+       ========================= -->
+  <audio id="musica" loop preload="auto">
+    <source src="Musica.mp3" type="audio/mpeg" />
+  </audio>
+
+  <script>
+    /* =====================================================
+       CONFIGURAÇÕES FÁCEIS DE EDITAR
+       ===================================================== */
+
+    // Data base para o contador de horas
+    const DATA_INICIAL = new Date("2020-01-01T00:00:00");
+
+    // Durações
+    const DURACAO_CONTADOR_MS = 2600;
+    const INTERVALO_FOTO_MS = 3000;
+
+    // Textos das fotos
+    const FOTO_TITULOS = [
+      "Um começo cheio de carinho",
+      "Um momento especial",
+      "Uma lembrança guardada no coração"
+    ];
+
+    const FOTO_TEXTOS = [
+      "Cada detalhe nosso merece ser lembrado com amor.",
+      "Algumas memórias não precisam de legenda para serem sentidas.",
+      "O que é verdadeiro sempre encontra um jeito de ficar."
+    ];
+
+    /* =====================================================
+       ELEMENTOS PRINCIPAIS
+       ===================================================== */
+    const startScreen = document.getElementById("startScreen");
+    const storyWrap = document.getElementById("storyWrap");
+    const openCardBtn = document.getElementById("openCardBtn");
+    const musica = document.getElementById("musica");
+    const particles = document.getElementById("particles");
+
+    const scenes = Array.from(document.querySelectorAll(".scene"));
+    const counterScene = scenes.find(s => s.dataset.scene === "counter");
+    const rosesScene = scenes.find(s => s.dataset.scene === "roses");
+    const perfumeScene = scenes.find(s => s.dataset.scene === "perfume");
+    const photosScene = scenes.find(s => s.dataset.scene === "photos");
+    const finalScene = scenes.find(s => s.dataset.scene === "final");
+
+    const counterNextBtn = document.getElementById("counterNextBtn");
+    const restartBtn = document.getElementById("restartBtn");
+
+    const hoursValue = document.getElementById("hoursValue");
+
+    const photoEls = Array.from(document.querySelectorAll(".photo"));
+    const photoDots = Array.from(document.querySelectorAll("#photoDots i"));
+    const photoTitle = document.getElementById("photoTitle");
+    const photoText = document.getElementById("photoText");
+
+    const roseOrbit = document.getElementById("roseOrbit");
+
+    let currentSceneIndex = 0;
+    let counterFinished = false;
+    let photoTimer = null;
+    let photoIndex = 0;
+
+    /* =====================================================
+       FUNÇÕES DA HISTÓRIA
+       ===================================================== */
+
+    function showScene(index){
+      scenes.forEach((scene, i) => {
+        scene.classList.toggle("active", i === index);
+      });
+      currentSceneIndex = index;
+      updateSceneSpecificEffects();
     }
 
-    slide++;
-
-    if(slide>fotos.length){
-        slide=1;
+    function nextScene(){
+      if (currentSceneIndex < scenes.length - 1){
+        showScene(currentSceneIndex + 1);
+      }
     }
 
-    fotos[slide-1].style.display="block";
+    function restartStory(){
+      showScene(0);
+      startScreen.style.display = "none";
+      storyWrap.style.display = "block";
+      startSceneEffects();
+      startCounterAnimation();
+      startPhotoShow();
+      playMusic();
+    }
 
-    setTimeout(mostrarFotos,3000);
-}
+    /* =====================================================
+       MÚSICA
+       A música só começa depois do clique na carta
+       ===================================================== */
+    async function playMusic(){
+      try{
+        musica.volume = 0.65;
+        await musica.play();
+      }catch(err){
+        // Alguns navegadores podem bloquear; o clique do usuário já ajuda bastante.
+        console.log("Música bloqueada pelo navegador:", err);
+      }
+    }
 
-mostrarFotos();
+    /* =====================================================
+       ENTRADA INICIAL
+       Clique na carta para abrir
+       ===================================================== */
+    openCardBtn.addEventListener("click", async () => {
+      startScreen.style.display = "none";
+      storyWrap.style.display = "block";
+      startSceneEffects();
+      startCounterAnimation();
+      startPhotoShow();
+      await playMusic();
+    });
 
-function criarCoracao(){
+    restartBtn.addEventListener("click", () => {
+      // volta para a primeira cena da história, sem mostrar a carta de novo
+      showScene(0);
+      startCounterAnimation();
+      startPhotoShow();
+    });
 
-    let coracao=document.createElement("div");
+    counterNextBtn.addEventListener("click", () => {
+      if (counterFinished){
+        nextScene();
+      }
+    });
 
-    coracao.classList.add("coracao");
+    document.querySelectorAll("[data-next]").forEach(btn => {
+      btn.addEventListener("click", () => nextScene());
+    });
 
-    coracao.innerHTML="❤️";
+    /* =====================================================
+       CONTADOR DE HORAS
+       ===================================================== */
+    function getTotalHours(){
+      const diff = Date.now() - DATA_INICIAL.getTime();
+      return Math.max(0, Math.floor(diff / 36e5));
+    }
 
-    coracao.style.left=Math.random()*100+"vw";
+    function animateCounter(){
+      const target = getTotalHours();
+      const start = performance.now();
 
-    coracao.style.fontSize=(20+Math.random()*30)+"px";
+      function frame(now){
+        const progress = Math.min((now - start) / DURACAO_CONTADOR_MS, 1);
+        const eased = 1 - Math.pow(1 - progress, 3); // easeOutCubic
+        const current = Math.floor(target * eased);
 
-    document.body.appendChild(coracao);
+        hoursValue.textContent = current.toLocaleString("pt-BR");
 
-    setTimeout(()=>{
-        coracao.remove();
-    },8000);
+        if (progress < 1){
+          requestAnimationFrame(frame);
+        } else {
+          hoursValue.textContent = target.toLocaleString("pt-BR");
+          counterFinished = true;
+        }
+      }
 
-}
+      counterFinished = false;
+      requestAnimationFrame(frame);
+    }
 
-setInterval(criarCoracao,500);
+    function startCounterAnimation(){
+      showScene(0);
+      animateCounter();
+    }
 
-</script>
+    /* =====================================================
+       FOTOS AUTOMÁTICAS
+       Passam sozinhas, uma por uma
+       ===================================================== */
+    function showPhoto(index){
+      photoEls.forEach((img, i) => {
+        img.classList.toggle("active", i === index);
+      });
 
+      photoDots.forEach((dot, i) => {
+        dot.classList.toggle("active", i === index);
+      });
+
+      photoTitle.textContent = FOTO_TITULOS[index] || "Um momento nosso";
+      photoText.textContent = FOTO_TEXTOS[index] || "Lembranças que vivem no coração.";
+    }
+
+    function startPhotoShow(){
+      if (photoTimer) clearInterval(photoTimer);
+
+      photoIndex = 0;
+      showPhoto(photoIndex);
+
+      photoTimer = setInterval(() => {
+        photoIndex = (photoIndex + 1) % photoEls.length;
+        showPhoto(photoIndex);
+      }, INTERVALO_FOTO_MS);
+    }
+
+    /* =====================================================
+       EFEITOS VISUAIS ESPECÍFICOS POR CENA
+       ===================================================== */
+    function updateSceneSpecificEffects(){
+      // Limpa os efeitos de rosas quando sair da cena, e recria quando entrar.
+      if (currentSceneIndex === 1){
+        startRoseRain();
+      } else {
+        stopRoseRain();
+      }
+    }
+
+    /* =====================================================
+       CHUVA DE ROSAS
+       ===================================================== */
+    let roseTimer = null;
+
+    function startRoseRain(){
+      if (roseTimer) return;
+
+      roseTimer = setInterval(() => {
+        createRoseParticle();
+      }, 240);
+    }
+
+    function stopRoseRain(){
+      if (roseTimer){
+        clearInterval(roseTimer);
+        roseTimer = null;
+      }
+      // remove rosas antigas para não acumular
+      roseOrbit.innerHTML = "";
+    }
+
+    function createRoseParticle(){
+      const el = document.createElement("span");
+      el.textContent = "🌹";
+      el.style.left = Math.random() * 100 + "%";
+      el.style.bottom = (-15 - Math.random() * 25) + "px";
+      el.style.fontSize = (18 + Math.random() * 18) + "px";
+      el.style.setProperty("--dx", (Math.random() * 220 - 110) + "px");
+      el.style.animationDuration = (6.8 + Math.random() * 3.5) + "s";
+      roseOrbit.appendChild(el);
+
+      setTimeout(() => {
+        el.remove();
+      }, 11000);
+    }
+
+    /* =====================================================
+       PARTÍCULAS GERAIS: CORAÇÕES, ROSAS, BRILHOS
+       ===================================================== */
+    function createParticle(){
+      const particle = document.createElement("div");
+      particle.className = "particle";
+
+      const scene = scenes[currentSceneIndex]?.dataset.scene;
+
+      let kind = "heart";
+      let symbol = "❤️";
+
+      // Em cada cena, muda um pouco o clima visual
+      if (scene === "roses" && Math.random() < 0.45){
+        kind = "rose";
+        symbol = "🌹";
+      } else if (scene === "perfume" && Math.random() < 0.55){
+        kind = "sparkle";
+        symbol = "✨";
+      } else if (scene === "final" && Math.random() < 0.2){
+        kind = "rose";
+        symbol = "💐";
+      }
+
+      particle.classList.add(kind);
+      particle.textContent = symbol;
+
+      const size = 16 + Math.random() * 28;
+      particle.style.fontSize = size + "px";
+      particle.style.left = Math.random() * 100 + "vw";
+      particle.style.setProperty("--drift", (Math.random() * 180 - 90) + "px");
+      particle.style.animationDuration = (6 + Math.random() * 5) + "s";
+
+      particles.appendChild(particle);
+
+      setTimeout(() => particle.remove(), 12000);
+    }
+
+    function startSceneEffects(){
+      // primeira chama as partículas gerais
+      setInterval(createParticle, 260);
+
+      // cria algumas iniciais para dar vida na tela
+      for(let i = 0; i < 12; i++){
+        setTimeout(createParticle, i * 120);
+      }
+    }
+
+    /* =====================================================
+       INICIALIZAÇÃO
+       ===================================================== */
+    showScene(0);
+
+    // Pequeno efeito inicial de partículas já na carta
+    for(let i = 0; i < 10; i++){
+      setTimeout(createParticle, i * 180);
+    }
+  </script>
 </body>
 </html>
